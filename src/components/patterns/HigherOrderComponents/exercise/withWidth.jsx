@@ -4,10 +4,12 @@ export const SMALL = 1
 export const MEDIUM = 2
 export const LARGE = 3
 
-const withWidth = (MyComponent) => {
-  const largeWidth = 992,
-        mediumWidth = 768,
-        resizeInterval = 166
+
+const withWidth = ({
+  largeWidth = 992,
+  mediumWidth = 768,
+  resizeInterval = 166
+}) => (MyComponent) => {
 
   return class WithWidth extends Component {
     constructor() {
@@ -37,9 +39,9 @@ const withWidth = (MyComponent) => {
       let width
       if (window) innerWidth = window.innerWidth
 
-      if (innerWidth >= largeWidth) {
+      if (innerWidth >= this.props.largeWidth || largeWidth) {
         width = LARGE
-      } else if (innerWidth >= mediumWidth) {
+      } else if (innerWidth >= this.props.mediumWidth || mediumWidth) {
         width = MEDIUM
       } else { // innerWidth < 768
         width = SMALL
